@@ -1,0 +1,30 @@
+*** Settings ***
+Library                 Selenium2Library
+
+*** Variables ***
+${BROWSER}              gc
+${GOOGLE_URL}           http://www.google.com
+
+*** Test Cases ***
+Visit Home Page
+    Given I Am At Google Page
+    When I Search For Scrum Alliance
+    Then I Should See Scrum Alliance Website 
+
+*** Keywords ***
+I Am At Google Page
+    Open Browser  ${GOOGLE_URL}  ${BROWSER}
+
+I Search For Scrum Alliance
+    Type Keyword  scrum alliance
+    Press Search Button
+
+Type Keyword
+    [Arguments]  ${keyword}
+    Input Text  gbqfq  ${keyword}
+
+Press Search Button
+    Click Button  gbqfb
+
+I Should See Scrum Alliance Website 
+    Wait Until Keyword Succeeds  2s  0.1s  Page Should Contain  www.scrumalliance.org 
